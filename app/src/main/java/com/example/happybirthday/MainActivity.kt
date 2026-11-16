@@ -1,6 +1,7 @@
 package com.example.happybirthday
 
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -23,6 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.happybirthday.ui.theme.HappyBirthdayTheme
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +38,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    GreetingText(" Happy Birthday Feister!", "From Matias", modifier = Modifier.padding(8.dp))
+                    GreetingImage(stringResource(R.string.happy_birthday_text),
+                        stringResource(R.string.signature_text)
+                    )
 
                 }
             }
@@ -60,7 +66,7 @@ fun GreetingText(message: String, from: String, modifier: Modifier = Modifier) {
             fontSize = 36.sp,
             modifier = Modifier
                 .padding(16.dp)
-                .align(alignment = Alignment.End)
+                .align(alignment = Alignment.CenterHorizontally)
         )
     }
 }
@@ -68,10 +74,21 @@ fun GreetingText(message: String, from: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingImage(message: String, from: String, modifier: Modifier = Modifier) {
     val image = painterResource(R.drawable.androidparty)
-    Image(
-        painter = image,
-        contentDescription = null
-    )
+    Box(modifier) {
+        Image(
+            painter = image,
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            alpha = 0.8F
+        )
+        GreetingText(
+            message = message,
+            from = from,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp)
+        )
+    }
 }
 
 @Preview(showBackground = true)
